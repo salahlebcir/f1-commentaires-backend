@@ -99,32 +99,38 @@ def add_comment():
 # Route pour récupérer les commentaires
 @app.route("/comments", methods=["GET"])
 def get_comments():
-    type_graphique = request.args.get("type")
-    grand_prix = request.args.get("gp")
-    cible = request.args.get("cible")  # facultatif
+    try:
+        type_graphique = request.args.get("type")
+        grand_prix = request.args.get("gp")
+        cible = request.args.get("cible")
 
-    if not type_graphique or not grand_prix:
-        return jsonify({"error": "Paramètres requis"}), 400
+        print("🔍 GET /comments avec :", type_graphique, grand_prix, cible)
 
-    query = Comment.query.filter_by(
-        type_graphique=type_graphique,
-        grand_prix=grand_prix
-    )
+        if not type_graphique or not grand_prix:
+            return jsonify({"error": "Paramètres requis"}), 400
 
-    if cible:
-        query = query.filter_by(cible=cible)
+        query = Comment.query.filter_by(
+            type_graphique=type_graphique,
+            grand_prix=grand_prix
+        )
+        if cible:
+            query = query.filter_by(cible=cible)
 
-    comments = query.order_by(Comment.timestamp.desc()).all()
+        comments = query.order_by(Comment.timestamp.desc()).all()
 
-    result = []
-    for c in comments:
-        result.append({
-            "auteur": c.auteur,
-            "contenu": c.contenu,
-            "timestamp": c.timestamp
-        })
+        result = []
+        for c in comments:
+            result.append({
+                "auteur": c.auteur,
+                "contenu": c.contenu,
+                "timestamp": c.timestamp
+            })
 
-    return jsonify(result), 200
+        return jsonify(result), 200
+    except Exception as e:
+        print("❌ Erreur GET /comments :", e)
+        return jsonify({"error": "Erreur serveur", "details": str(e)}), 500
+
 
 # Lancement du serveur
 if __name__ == "__main__":
