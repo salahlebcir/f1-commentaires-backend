@@ -22,4 +22,4 @@ class Comment(db.Model):
     timestamp = db.Column(db.String(100), nullable=False)
     type_graphique = db.Column(db.String(50), nullable=False)
     grand_prix = db.Column(db.String(100), nullable=False)
-    cible = db.Column(db.String(100))  # champ optionnel pour tour, pilote, etc.
+    cible = db.Column(db.String(100))  # facultatif
