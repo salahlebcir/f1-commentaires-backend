@@ -117,9 +117,14 @@ def get_comments():
 
     return jsonify(result), 200
 
-if __name__ == "__main__":
+def create_app():
     with app.app_context():
-        db.drop_all()
         db.create_all()
+    return app
+
+if __name__ == "__main__":
+    import os
     port = int(os.environ.get("PORT", 10000))
+    with app.app_context():
+        db.create_all()
     app.run(host="0.0.0.0", port=port)
