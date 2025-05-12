@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang=en>
+<title>415 Unsupported Media Type</title>
+<h1>Unsupported Media Type</h1>
+<p>Did not attempt to load JSON data because the request Content-Type was not &#39;application/json&#39;.</p>
+--_curl_--"auteur": "salah_lebcir"
+--_curl_-- "contenu": "Pas mal!"
+--_curl_-- "type_graphique": "tour"
+--_curl_-- "grand_prix": "Monaco Grand Prix"
