@@ -83,7 +83,6 @@ def add_comment():
         grand_prix=grand_prix,
         cible=cible
     )
-
     db.session.add(new_comment)
     db.session.commit()
 
@@ -106,7 +105,6 @@ def get_comments():
         query = query.filter_by(cible=cible)
 
     comments = query.order_by(Comment.timestamp.desc()).all()
-
     result = []
     for c in comments:
         result.append({
@@ -121,10 +119,3 @@ def create_app():
     with app.app_context():
         db.create_all()
     return app
-
-if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 10000))
-    with app.app_context():
-        db.create_all()
-    app.run(host="0.0.0.0", port=port)
